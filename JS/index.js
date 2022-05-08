@@ -65,7 +65,75 @@ let keyboard = [
     "→"
 ]
 
+let arrData = [
+    'Backquote',
+    'Digit1',
+    'Digit2',
+    'Digit3',
+    'Digit4',
+    'Digit5',
+    'Digit6',
+    'Digit7',
+    'Digit8',
+    'Digit9',
+    'Digit0',
+    'Minus',
+    'Equal',
+    'Backspace',
+    'Tab',
+    'KeyQ',
+    'KeyW',
+    'KeyE',
+    'KeyR',
+    'KeyT',
+    'KeyY',
+    'KeyU',
+    'KeyI',
+    'KeyO',
+    'KeyP',
+    'BracketLeft',
+    'BracketRight',
+    'Backslash',
+    'CapsLock',
+    'KeyA',
+    'KeyS',
+    'KeyD',
+    'KeyF',
+    'KeyG',
+    'KeyH',
+    'KeyJ',
+    'KeyK',
+    'KeyL',
+    'Semicolon',
+    'Quote',
+    'Enter',
+    'ShiftLeft',
+    'KeyZ',
+    'KeyX',
+    'KeyC',
+    'KeyV',
+    'KeyB',
+    'KeyN',
+    'KeyM',
+    'Comma',
+    'Period',
+    'Slash',
+    'ShiftRight',
+    'ArrowUp',
+    'ControlLeft',
+    'MetaLeft',
+    'AltLeft',
+    'Space',
+    'AltRight',
+    'ControlRight',
+    'ArrowLeft',
+    'ArrowDown',
+    'ArrowRight'
+]
+
 keyboard = keyboard.reverse()
+
+arrData = arrData.reverse()
 
 let wrapper = document.querySelector('body')
 
@@ -88,8 +156,8 @@ function get () {
     textarea = createTextariaTemplate()
     wrapper.appendChild(textarea)
     for(let i = 0; i < keyboard.length; i++) {
-        button.insertAdjacentHTML('afterbegin', `<div class = "button">${keyboard[i]}</div>`)
-        wrapper.appendChild(button)
+            button.insertAdjacentHTML('afterbegin', `<div class = "button" data-but = ${arrData[i]}>${keyboard[i]}</div>`)
+            wrapper.appendChild(button)
     }
     getCards()
 }
@@ -113,8 +181,27 @@ function getCards() {
         }  
         })
     }
-    
- 
 
+    document.onkeydown = function(event) {
+        console.log(event.code)
+       document.querySelectorAll('.button').forEach((e) => { 
+          if (e.dataset.but === event.code) {
+            e.classList.add('active')
+          }
+      })
+    }
+    document.onkeyup = function(event) {
+       document.querySelectorAll('.button').forEach((e) => { 
+          if (e.dataset.but === event.code) {
+            e.classList.remove('active')
+          }
+      })
+    }
 
-
+    document.querySelector('.container').onmousedown = (e) => {
+        e.target.classList.add('active')
+    }
+    document.querySelector('.container').onmouseup  = (e) => {
+        e.target.classList.remove('active')
+        
+    }
