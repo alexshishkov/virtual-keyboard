@@ -6,14 +6,14 @@ body {
    margin-top: 250px;
 }
 .textarea {
-    width: 800px;
-    height: 100px;
-    font-size: 20px;
-    color: #2f4f4f;
+    width: 890px;
+    height: 150px;
+    font-size: 25px;
+    color: black;
     margin-bottom: 20px;
 }
 .container {
-    width: 850px;
+    width: 890px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -24,17 +24,22 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
-    background: black;
-    margin: 2px;
+    border: 1px solid;
+    border-color: black;
+    color: black;
+    font-family: Georgia;
+    font-size: 22px;
+    background-image: -webkit-linear-gradient(45deg, black 50%, transparent 50%);
+    background-image: linear-gradient(45deg, black 50%, transparent 50%);
+    background-position: 100%;
+    background-size: 400%;
+    -webkit-transition: background 100ms ease-in-out;
+    transition: background 100ms ease-in-out;
+    margin: 4px;
 }
 .active {
-    border-radius: 20px;
-    background: #2f4f4f;
-}
-.button:hover {
-    background: #2f4f4f;
-   opacity: 0.7;
+    color: white;
+    background-position: 0;
 }
 .backspace {
     width: 100px;
@@ -52,5 +57,5 @@ body {
     width: 100px;
 }
 .space {
-    width: 368px;
+    width: 390px;
 }
