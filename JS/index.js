@@ -1,4 +1,3 @@
-
 let keyboard = [
     "`",
     "1",
@@ -13,7 +12,7 @@ let keyboard = [
     "0",
     "-",
     "=",
-    "⇐",
+    'Backspace',
     "tab",
     "q",
     "w",
@@ -52,8 +51,8 @@ let keyboard = [
     ",",
     ".",
     "/",
-    "shift",
     "↑",
+    "shift",
     "ctrl",
     "win",
     "alt",
@@ -118,8 +117,8 @@ let arrData = [
     'Comma',
     'Period',
     'Slash',
-    'ShiftRight',
     'ArrowUp',
+    'ShiftRight',
     'ControlLeft',
     'MetaLeft',
     'AltLeft',
@@ -148,6 +147,25 @@ let createButtonTemplate = () => {
     button.classList.add("container")
     return button
 }
+
+function getCards() {
+    document.querySelectorAll(".button").forEach((e) => {
+        if (e.innerHTML === "Backspace") {
+            e.classList.add("backspace")
+        } else if (e.innerHTML === "tab") {
+            e.classList.add("tab")
+        } else if (e.innerHTML === "capslock") {
+            e.classList.add("capslock")
+        } else if (e.innerHTML === "enter") {
+            e.classList.add("enter")
+        } else if (e.dataset.but === "ShiftLeft") {
+            e.classList.add("shift")
+        } else if (e.innerHTML === "space") {
+            e.classList.add("space")
+        }  
+        })
+    }
+
 wrapper.innerHTML = ''
 function get () {
     let button = ''
@@ -155,7 +173,7 @@ function get () {
     button = createButtonTemplate()
     textarea = createTextariaTemplate()
     wrapper.appendChild(textarea)
-    for(let i = 0; i < keyboard.length; i++) {
+    for(let i = 0; i < keyboard.length; i += 1) {
             button.insertAdjacentHTML('afterbegin', `<div class = "button" data-but = ${arrData[i]}>${keyboard[i]}</div>`)
             wrapper.appendChild(button)
     }
@@ -164,33 +182,28 @@ function get () {
 
 get()
 
-function getCards() {
-    document.querySelectorAll(".button").forEach((e) => {
-        if (e.innerHTML == "⇐") {
-            e.classList.add("backspace")
-        } else if (e.innerHTML === "tab") {
-            e.classList.add("tab")
-        } else if (e.innerHTML === "capslock") {
-            e.classList.add("capslock")
-        } else if (e.innerHTML === "enter") {
-            e.classList.add("enter")
-        } else if (e.innerHTML === "shift") {
-            e.classList.add("shift")
-        } else if (e.innerHTML === "space") {
-            e.classList.add("space")
-        }  
-        })
-    }
+let textValue = ''
 
-    document.onkeydown = function(event) {
-        console.log(event.code)
+    document.onkeydown = (event) => {
+        if (event.key.length === 1) {
+            textValue += event.key
+            document.querySelector('textarea').value = textValue
+       } else if (event.code === "Backspace") {
+            textValue = textValue.slice(0, -1)
+            document.querySelector('textarea').value = textValue
+        } else if(event.code === "Enter") {
+            textValue += "\n"      
+         } else if(event.code === "Tab") {
+            textValue += "   "
+            return false
+         }
        document.querySelectorAll('.button').forEach((e) => { 
           if (e.dataset.but === event.code) {
             e.classList.add('active')
           }
       })
     }
-    document.onkeyup = function(event) {
+    document.onkeyup = (event) => {
        document.querySelectorAll('.button').forEach((e) => { 
           if (e.dataset.but === event.code) {
             e.classList.remove('active')
@@ -199,9 +212,22 @@ function getCards() {
     }
 
     document.querySelector('.container').onmousedown = (e) => {
-        e.target.classList.add('active')
+        e.target.classList.add('active_but')
+        if (e.target.innerHTML.length === 1) {
+            textValue += e.target.innerHTML 
+        } else if (e.target.innerHTML === "Backspace") {
+            textValue = textValue.slice(0, -1)
+        } else if(e.target.innerHTML == "enter") {
+            textValue += "\n"      
+        } else if(e.target.innerHTML == "space") {
+            textValue += " "
+        } else if(e.target.innerHTML == "tab") {
+            textValue += "    "
+        }
+        document.querySelector('textarea').value = textValue
     }
+     
     document.querySelector('.container').onmouseup  = (e) => {
-        e.target.classList.remove('active')
-        
+        e.target.classList.remove('active_but')
     }
+    
